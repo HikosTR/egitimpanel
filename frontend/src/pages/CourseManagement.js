@@ -97,6 +97,9 @@ export default function CourseManagement() {
                 <DialogTitle className="text-xl uppercase tracking-tight" style={{ fontFamily: 'Barlow Condensed' }}>
                   {editCourse ? 'Egitim Duzenle' : 'Yeni Egitim'}
                 </DialogTitle>
+                <DialogDescription className="text-sm text-gray-500">
+                  {editCourse ? 'Egitim bilgilerini guncelleyin' : 'Yeni egitim bilgilerini girin'}
+                </DialogDescription>
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-4 mt-4">
                 <div className="space-y-2">
