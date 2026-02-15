@@ -1,53 +1,63 @@
-import { useEffect } from "react";
-import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from '@/contexts/AuthContext';
+import { ProtectedRoute } from '@/components/ProtectedRoute';
+import { Toaster } from '@/components/ui/sonner';
+import LoginPage from '@/pages/LoginPage';
+import AdminDashboard from '@/pages/AdminDashboard';
+import UserManagement from '@/pages/UserManagement';
+import CourseManagement from '@/pages/CourseManagement';
+import CourseDetail from '@/pages/CourseDetail';
+import VideoPlayer from '@/pages/VideoPlayer';
+import QuizPage from '@/pages/QuizPage';
+import DistributorDashboard from '@/pages/DistributorDashboard';
+import ProfilePage from '@/pages/ProfilePage';
+import ReportsPage from '@/pages/ReportsPage';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+function AppRoutes() {
+  const { user, loading } = useAuth();
 
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
-
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-white">
+        <div className="w-10 h-10 border-4 border-[#00C853] border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/login" element={user ? <Navigate to={user.role === 'distributor' ? '/dashboard' : '/admin'} /> : <LoginPage />} />
+      
+      {/* Admin Routes */}
+      <Route path="/admin" element={<ProtectedRoute roles={['super_admin', 'admin']}><AdminDashboard /></ProtectedRoute>} />
+      <Route path="/admin/users" element={<ProtectedRoute roles={['super_admin', 'admin']}><UserManagement /></ProtectedRoute>} />
+      <Route path="/admin/courses" element={<ProtectedRoute roles={['super_admin', 'admin']}><CourseManagement /></ProtectedRoute>} />
+      <Route path="/admin/courses/:courseId" element={<ProtectedRoute roles={['super_admin', 'admin']}><CourseDetail /></ProtectedRoute>} />
+      <Route path="/admin/reports" element={<ProtectedRoute roles={['super_admin', 'admin']}><ReportsPage /></ProtectedRoute>} />
+      
+      {/* Distributor Routes */}
+      <Route path="/dashboard" element={<ProtectedRoute roles={['distributor']}><DistributorDashboard /></ProtectedRoute>} />
+      <Route path="/course/:courseId" element={<ProtectedRoute><CourseDetail /></ProtectedRoute>} />
+      <Route path="/video/:videoId" element={<ProtectedRoute><VideoPlayer /></ProtectedRoute>} />
+      <Route path="/quiz/:quizId" element={<ProtectedRoute><QuizPage /></ProtectedRoute>} />
+      
+      {/* Shared Routes */}
+      <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+      
+      {/* Default Redirect */}
+      <Route path="*" element={<Navigate to="/login" />} />
+    </Routes>
   );
-};
+}
 
 function App() {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <AuthProvider>
+        <Toaster position="top-right" richColors />
+        <AppRoutes />
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 
