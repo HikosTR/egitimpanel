@@ -35,6 +35,7 @@ function AppRoutes() {
       <Route path="/admin/courses" element={<ProtectedRoute roles={['super_admin', 'admin']}><CourseManagement /></ProtectedRoute>} />
       <Route path="/admin/courses/:courseId" element={<ProtectedRoute roles={['super_admin', 'admin']}><CourseDetail /></ProtectedRoute>} />
       <Route path="/admin/reports" element={<ProtectedRoute roles={['super_admin', 'admin']}><ReportsPage /></ProtectedRoute>} />
+      <Route path="/admin/settings" element={<ProtectedRoute roles={['super_admin', 'admin']}><SettingsPage /></ProtectedRoute>} />
       
       {/* Distributor Routes */}
       <Route path="/dashboard" element={<ProtectedRoute roles={['distributor']}><DistributorDashboard /></ProtectedRoute>} />
