@@ -57,9 +57,13 @@ export const Sidebar = () => {
     <div className="flex flex-col h-full" data-testid="sidebar">
       <div className="p-6 border-b border-white/10">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-[#00C853] flex items-center justify-center flex-shrink-0">
-            <GraduationCap className="w-5 h-5 text-white" />
-          </div>
+          {logoUrl ? (
+            <img src={logoUrl} alt="Logo" className="w-9 h-9 rounded-lg object-contain flex-shrink-0" data-testid="sidebar-logo" />
+          ) : (
+            <div className="w-9 h-9 rounded-lg bg-[#00C853] flex items-center justify-center flex-shrink-0">
+              <GraduationCap className="w-5 h-5 text-white" />
+            </div>
+          )}
           {!collapsed && (
             <div className="animate-fadeIn">
               <h1 className="text-lg font-bold tracking-tight text-white" style={{ fontFamily: 'Barlow Condensed' }}>
