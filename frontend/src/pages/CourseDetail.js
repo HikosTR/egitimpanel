@@ -558,6 +558,9 @@ export default function CourseDetail() {
               <DialogTitle className="text-xl uppercase tracking-tight" style={{ fontFamily: 'Barlow Condensed' }}>
                 Quiz Duzenle
               </DialogTitle>
+              <DialogDescription className="text-sm text-gray-500">
+                Quiz sorularini ekleyin veya duzenleyin
+              </DialogDescription>
             </DialogHeader>
             <div className="space-y-6 mt-4">
               <div className="space-y-2">
