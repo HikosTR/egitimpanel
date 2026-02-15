@@ -28,6 +28,17 @@ export const Sidebar = () => {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [logoUrl, setLogoUrl] = useState('');
+
+  useEffect(() => {
+    axios.get(`${BACKEND_URL}/api/settings`)
+      .then(res => {
+        if (res.data?.logo_url) {
+          setLogoUrl(res.data.logo_url.startsWith('/api') ? `${BACKEND_URL}${res.data.logo_url}` : res.data.logo_url);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   const links = user?.role === 'distributor' ? distributorLinks : adminLinks;
 
