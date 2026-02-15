@@ -927,6 +927,89 @@ async def serve_video(filename: str):
         raise HTTPException(status_code=404, detail='Dosya bulunamadi')
     return FileResponse(str(file_path))
 
+@api_router.get("/uploads/images/{filename}")
+async def serve_image(filename: str):
+    file_path = UPLOAD_DIR / 'images' / filename
+    if not file_path.exists():
+        raise HTTPException(status_code=404, detail='Dosya bulunamadi')
+    return FileResponse(str(file_path))
+
+# ============ SITE SETTINGS ROUTES ============
+
+DEFAULT_SETTINGS = {
+    'id': 'site_settings',
+    'logo_url': '',
+    'login_bg_url': 'https://images.unsplash.com/photo-1758518731468-98e90ffd7430?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzl8MHwxfHNlYXJjaHwyfHxjb3Jwb3JhdGUlMjBsZWFkZXJzaGlwJTIwdGVhbSUyMG1lZXRpbmclMjBtb2Rlcm4lMjBvZmZpY2V8ZW58MHx8fHwxNzcxMTkzMjk1fDA&ixlib=rb-4.1.0&q=85',
+    'login_title_line1': 'Lider Yetistirme Platformu',
+    'login_title_line2': '',
+    'login_subtitle': "ProFit Team'e Hos Geldin! Lider olma yolunda hizlica ivmelenin!",
+    'stats': [
+        {'label': 'Egitim Saati', 'value': '500+'},
+        {'label': 'Mezun', 'value': '1000+'},
+        {'label': 'Memnuniyet', 'value': '98%'}
+    ]
+}
+
+@api_router.get("/settings")
+async def get_settings():
+    settings = await db.site_settings.find_one({'id': 'site_settings'}, {'_id': 0})
+    if not settings:
+        return DEFAULT_SETTINGS
+    return settings
+
+@api_router.put("/settings")
+async def update_settings(request: Request):
+    current = await get_current_user(request)
+    if current['role'] not in ['super_admin', 'admin']:
+        raise HTTPException(status_code=403, detail='Yetkiniz yok')
+    body = await request.json()
+    body['id'] = 'site_settings'
+    await db.site_settings.update_one(
+        {'id': 'site_settings'},
+        {'$set': body},
+        upsert=True
+    )
+    settings = await db.site_settings.find_one({'id': 'site_settings'}, {'_id': 0})
+    return settings
+
+@api_router.post("/settings/upload-logo")
+async def upload_logo(file: UploadFile = File(...), request: Request = None):
+    current = await get_current_user(request)
+    if current['role'] not in ['super_admin', 'admin']:
+        raise HTTPException(status_code=403, detail='Yetkiniz yok')
+    file_id = str(uuid.uuid4())
+    ext = file.filename.split('.')[-1] if '.' in file.filename else 'png'
+    file_path = UPLOAD_DIR / 'images' / f'logo_{file_id}.{ext}'
+    content = await file.read()
+    with open(file_path, 'wb') as f:
+        f.write(content)
+    url = f'/api/uploads/images/logo_{file_id}.{ext}'
+    await db.site_settings.update_one(
+        {'id': 'site_settings'},
+        {'$set': {'id': 'site_settings', 'logo_url': url}},
+        upsert=True
+    )
+    return {'url': url}
+
+@api_router.post("/settings/upload-bg")
+async def upload_bg(file: UploadFile = File(...), request: Request = None):
+    current = await get_current_user(request)
+    if current['role'] not in ['super_admin', 'admin']:
+        raise HTTPException(status_code=403, detail='Yetkiniz yok')
+    file_id = str(uuid.uuid4())
+    ext = file.filename.split('.')[-1] if '.' in file.filename else 'jpg'
+    file_path = UPLOAD_DIR / 'images' / f'bg_{file_id}.{ext}'
+    content = await file.read()
+    with open(file_path, 'wb') as f:
+        f.write(content)
+    url = f'/api/uploads/images/bg_{file_id}.{ext}'
+    await db.site_settings.update_one(
+        {'id': 'site_settings'},
+        {'$set': {'id': 'site_settings', 'login_bg_url': url}},
+        upsert=True
+    )
+    return {'url': url}
+
 # ============ INCLUDE ROUTER & MIDDLEWARE ============
 
 app.include_router(api_router)
