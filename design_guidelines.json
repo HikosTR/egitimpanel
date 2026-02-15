@@ -1,0 +1,135 @@
+{
+  "project_name": "ProFit Team - Eğitim Platformu",
+  "design_philosophy": {
+    "theme": "Corporate Leadership",
+    "tone": "Strong, Elite, Disciplined, Professional",
+    "core_concept": "Progress through Discipline",
+    "visual_style": "High Contrast, Minimalist, Data-Driven"
+  },
+  "typography": {
+    "font_family": {
+      "headings": "Barlow Condensed, sans-serif",
+      "body": "Manrope, sans-serif"
+    },
+    "scale": {
+      "h1": "text-5xl font-bold tracking-tight uppercase",
+      "h2": "text-3xl font-bold tracking-tight uppercase",
+      "h3": "text-2xl font-semibold tracking-normal",
+      "body": "text-base font-normal leading-relaxed",
+      "caption": "text-sm font-medium text-muted-foreground uppercase tracking-wider"
+    },
+    "imports": [
+      "@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Manrope:wght@400;500;600;700&display=swap');"
+    ]
+  },
+  "colors": {
+    "palette": {
+      "background": "#FFFFFF",
+      "foreground": "#111111",
+      "card": "#FFFFFF",
+      "card_foreground": "#111111",
+      "primary": "#00C853",
+      "primary_foreground": "#FFFFFF",
+      "secondary": "#F5F7FA",
+      "secondary_foreground": "#111111",
+      "muted": "#F5F7FA",
+      "muted_foreground": "#64748B",
+      "destructive": "#EF4444",
+      "destructive_foreground": "#FFFFFF",
+      "border": "#E2E8F0",
+      "input": "#E2E8F0",
+      "ring": "#00C853",
+      "sidebar": "#111111",
+      "sidebar_foreground": "#FFFFFF",
+      "sidebar_hover": "#222222",
+      "success": "#00C853",
+      "warning": "#F59E0B"
+    },
+    "gradients": {
+      "primary_action": "bg-gradient-to-r from-[#00C853] to-[#00E676]",
+      "dark_surface": "bg-gradient-to-b from-[#111111] to-[#0A0A0A]"
+    }
+  },
+  "layout": {
+    "spacing": {
+      "container_padding": "p-6 md:p-8 lg:p-12",
+      "section_gap": "gap-8",
+      "card_padding": "p-6"
+    },
+    "radius": {
+      "default": "rounded-lg",
+      "card": "rounded-lg",
+      "button": "rounded-md"
+    },
+    "grid_system": {
+      "dashboard": "grid grid-cols-1 md:grid-cols-12 gap-6",
+      "bento_metrics": "col-span-12 md:col-span-3 h-32",
+      "bento_main_chart": "col-span-12 md:col-span-8 row-span-2",
+      "bento_side_list": "col-span-12 md:col-span-4 row-span-2"
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-primary text-primary-foreground hover:bg-green-600 shadow-md transition-all duration-200 uppercase font-bold tracking-wide",
+      "secondary": "bg-secondary text-secondary-foreground hover:bg-gray-200 uppercase font-semibold tracking-wide",
+      "outline": "border-2 border-primary text-primary hover:bg-primary hover:text-white uppercase font-bold tracking-wide"
+    },
+    "cards": {
+      "default": "bg-white border border-border shadow-sm hover:shadow-md transition-shadow duration-300",
+      "metric": "bg-white border-l-4 border-l-primary shadow-sm"
+    },
+    "inputs": {
+      "default": "bg-white border-input focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 rounded-md"
+    },
+    "sidebar": {
+      "container": "bg-[#111111] text-white h-screen w-64 flex flex-col fixed left-0 top-0 z-50",
+      "item": "flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-[#222222] transition-colors duration-200 rounded-lg mx-2 my-1",
+      "item_active": "bg-primary text-white font-semibold"
+    }
+  },
+  "visual_enhancers": {
+    "shadows": {
+      "card": "shadow-[0_2px_8px_rgba(0,0,0,0.05)]",
+      "hover": "shadow-[0_8px_24px_rgba(0,0,0,0.12)]",
+      "glow": "shadow-[0_0_15px_rgba(0,200,83,0.3)]"
+    },
+    "borders": {
+      "subtle": "border border-gray-100",
+      "highlight": "border-l-4 border-primary"
+    }
+  },
+  "assets": {
+    "images": {
+      "login_bg": "https://images.unsplash.com/photo-1758518731468-98e90ffd7430?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzl8MHwxfHNlYXJjaHwyfHxjb3Jwb3JhdGUlMjBsZWFkZXJzaGlwJTIwdGVhbSUyMG1lZXRpbmclMjBtb2Rlcm4lMjBvZmZpY2V8ZW58MHx8fHwxNzcxMTkzMjk1fDA&ixlib=rb-4.1.0&q=85",
+      "course_strategy": "https://images.unsplash.com/photo-1765438864799-6e620d420a6d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAxODF8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHN0cmF0ZWd5JTIwcHJlc2VudGF0aW9uJTIwbWFya2V0aW5nJTIwY2hhcnR8ZW58MHx8fHwxNzcxMTkzMjk2fDA&ixlib=rb-4.1.0&q=85",
+      "course_marketing": "https://images.unsplash.com/photo-1758691736542-c437fea2c673?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAxODF8MHwxfHNlYXJjaHw0fHxidXNpbmVzcyUyMHN0cmF0ZWd5JTIwcHJlc2VudGF0aW9uJTIwbWFya2V0aW5nJTIwY2hhcnR8ZW58MHx8fHwxNzcxMTkzMjk2fDA&ixlib=rb-4.1.0&q=85",
+      "avatar_male": "https://images.unsplash.com/photo-1769636929261-e913ed023c83?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njd8MHwxfHNlYXJjaHwzfHxwcm9mZXNzaW9uYWwlMjBjb3Jwb3JhdGUlMjBoZWFkc2hvdCUyMHBvcnRyYWl0fGVufDB8fHx8MTc3MTE5MzI5N3ww&ixlib=rb-4.1.0&q=85",
+      "avatar_female": "https://images.unsplash.com/photo-1758599543120-4e462429a4d7?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njd8MHwxfHNlYXJjaHw0fHxwcm9mZXNzaW9uYWwlMjBjb3Jwb3JhdGUlMjBoZWFkc2hvdCUyMHBvcnRyYWl0fGVufDB8fHx8MTc3MTE5MzI5N3ww&ixlib=rb-4.1.0&q=85",
+      "badge_gold": "https://images.unsplash.com/photo-1671739250895-1d57d6095a05?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA0MTJ8MHwxfHNlYXJjaHwzfHxnb2xkJTIwYWNoaWV2ZW1lbnQlMjBtZWRhbCUyMGJhZGdlJTIwc2ltcGxlfGVufDB8fHx8MTc3MTE5MzI5OHww&ixlib=rb-4.1.0&q=85",
+      "logo_placeholder": "https://images.unsplash.com/photo-1756999223507-72bfbb654193?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzF8MHwxfHNlYXJjaHwxfHxtaW5pbWFsaXN0JTIwZ3JlZW4lMjBhYnN0cmFjdCUyMGxvZ298ZW58MHx8fHwxNzcxMTkzMjk5fDA&ixlib=rb-4.1.0&q=85"
+    },
+    "icons_library": "lucide-react"
+  },
+  "instructions_to_main_agent": [
+    "IMPORTANT: YOU HAVE .JS FILES. Convert all design logic to plain React/JS. Do not use TS types.",
+    "Implement the 'Locked Progression' visual state using greyed-out cards with a lock icon overlay.",
+    "Use 'Barlow Condensed' for all headings to give that 'Strong Leadership' vibe.",
+    "The Sidebar MUST be dark (#111111) with white text. The main content area MUST be light/white.",
+    "Use the primary green (#00C853) sparingly for CTAs, Progress Bars, and Active States to maintain high impact.",
+    "Login Page: Split screen. Left side: Dark area with 'Motivation Text' and Image Overlay. Right side: Clean white form.",
+    "Certificates: Use a clean border layout with the Logo and Gold Badge image centered.",
+    "Use Recharts for the Analytics dashboard (Bar charts for user progress, Pie charts for course completion).",
+    "Ensure all text is Turkish language as per requirements.",
+    "For the 'Level System', create a visual hierarchy (e.g., Bronze, Silver, Gold, Elite) using badge icons and color coding in the Profile section.",
+    "All interactive elements MUST have 'data-testid' attributes."
+  ],
+  "UNIVERSAL_GUIDELINES": [
+    "Do not use gradients for dark colors.",
+    "Use 2-3x more spacing than feels comfortable.",
+    "Add micro-interactions: hover states, transitions.",
+    "Use 'sonner' for toasts.",
+    "Components must use named exports.",
+    "Pages must use default exports.",
+    "Never use AI emoji icons."
+  ]
+}
