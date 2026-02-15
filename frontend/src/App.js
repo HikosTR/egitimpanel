@@ -12,6 +12,7 @@ import QuizPage from '@/pages/QuizPage';
 import DistributorDashboard from '@/pages/DistributorDashboard';
 import ProfilePage from '@/pages/ProfilePage';
 import ReportsPage from '@/pages/ReportsPage';
+import SettingsPage from '@/pages/SettingsPage';
 
 function AppRoutes() {
   const { user, loading } = useAuth();
