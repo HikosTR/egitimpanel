@@ -466,6 +466,9 @@ export default function CourseDetail() {
               <DialogTitle className="text-xl uppercase tracking-tight" style={{ fontFamily: 'Barlow Condensed' }}>
                 {editModule ? 'Modul Duzenle' : 'Yeni Modul'}
               </DialogTitle>
+              <DialogDescription className="text-sm text-gray-500">
+                {editModule ? 'Modul bilgilerini guncelleyin' : 'Yeni modul bilgilerini girin'}
+              </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleModuleSubmit} className="space-y-4 mt-4">
               <div className="space-y-2">
