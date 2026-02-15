@@ -504,6 +504,9 @@ export default function CourseDetail() {
               <DialogTitle className="text-xl uppercase tracking-tight" style={{ fontFamily: 'Barlow Condensed' }}>
                 Yeni Video
               </DialogTitle>
+              <DialogDescription className="text-sm text-gray-500">
+                Video bilgilerini girin
+              </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleVideoSubmit} className="space-y-4 mt-4">
               <div className="space-y-2">
