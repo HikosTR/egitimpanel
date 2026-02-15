@@ -107,6 +107,9 @@ export default function UserManagement() {
                 <DialogTitle className="text-xl uppercase tracking-tight" style={{ fontFamily: 'Barlow Condensed' }}>
                   {editUser ? 'Kullanici Duzenle' : 'Yeni Kullanici'}
                 </DialogTitle>
+                <DialogDescription className="text-sm text-gray-500">
+                  {editUser ? 'Kullanici bilgilerini guncelleyin' : 'Yeni kullanici bilgilerini girin'}
+                </DialogDescription>
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-4 mt-4">
                 <div className="space-y-2">
