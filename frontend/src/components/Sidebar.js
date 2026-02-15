@@ -11,6 +11,7 @@ const adminLinks = [
   { to: '/admin/users', icon: Users, label: 'Kullanicilar' },
   { to: '/admin/courses', icon: BookOpen, label: 'Egitimler' },
   { to: '/admin/reports', icon: BarChart3, label: 'Raporlar' },
+  { to: '/admin/settings', icon: Settings, label: 'Ayarlar' },
   { to: '/profile', icon: UserCircle, label: 'Profil' },
 ];
 
