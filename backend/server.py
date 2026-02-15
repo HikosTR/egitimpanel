@@ -29,6 +29,7 @@ UPLOAD_DIR = ROOT_DIR / 'uploads'
 UPLOAD_DIR.mkdir(exist_ok=True)
 (UPLOAD_DIR / 'videos').mkdir(exist_ok=True)
 (UPLOAD_DIR / 'certificates').mkdir(exist_ok=True)
+(UPLOAD_DIR / 'images').mkdir(exist_ok=True)
 
 JWT_SECRET = os.environ.get('JWT_SECRET', 'profit-team-jwt-secret')
 JWT_ALGORITHM = 'HS256'
