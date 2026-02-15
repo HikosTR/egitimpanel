@@ -4,7 +4,10 @@ import {
   LayoutDashboard, Users, BookOpen, UserCircle, BarChart3,
   LogOut, ChevronLeft, ChevronRight, GraduationCap, Menu, X, Settings
 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const adminLinks = [
   { to: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
