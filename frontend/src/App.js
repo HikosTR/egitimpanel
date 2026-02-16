@@ -14,6 +14,8 @@ import ProfilePage from '@/pages/ProfilePage';
 import ReportsPage from '@/pages/ReportsPage';
 import SettingsPage from '@/pages/SettingsPage';
 import LeaderboardPage from '@/pages/LeaderboardPage';
+import QualificationsManage from '@/pages/QualificationsManage';
+import QualificationsView from '@/pages/QualificationsView';
 
 function AppRoutes() {
   const { user, loading } = useAuth();
