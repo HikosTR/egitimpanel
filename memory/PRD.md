@@ -42,6 +42,7 @@ Kapali sistem, liderlik temali, network marketing odakli bir egitim portali. Sad
 - [x] Reports page (user-based detailed reports)
 - [x] PDF certificate generation with Turkish character support (DejaVu Sans font)
 - [x] Certificate: QR code removed, Upper Leader congratulation message added
+- [x] Instagram Story sharing: vertical 1080x1920 PNG + Web Share API / download fallback
 - [x] Level system (5 levels based on completed courses)
 - [x] Badge system
 - [x] Split-screen login page with motivation text
