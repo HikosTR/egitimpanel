@@ -13,6 +13,7 @@ const adminLinks = [
   { to: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
   { to: '/admin/users', icon: Users, label: 'Kullanicilar' },
   { to: '/admin/courses', icon: BookOpen, label: 'Egitimler' },
+  { to: '/admin/qualifications', icon: Newspaper, label: 'Kalifikasyon' },
   { to: '/leaderboard', icon: Trophy, label: 'Siralama' },
   { to: '/admin/reports', icon: BarChart3, label: 'Raporlar' },
   { to: '/admin/settings', icon: Settings, label: 'Ayarlar' },
