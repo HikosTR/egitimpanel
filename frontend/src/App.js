@@ -40,6 +40,7 @@ function AppRoutes() {
       
       {/* Distributor Routes */}
       <Route path="/dashboard" element={<ProtectedRoute roles={['distributor']}><DistributorDashboard /></ProtectedRoute>} />
+      <Route path="/leaderboard" element={<ProtectedRoute><LeaderboardPage /></ProtectedRoute>} />
       <Route path="/course/:courseId" element={<ProtectedRoute><CourseDetail /></ProtectedRoute>} />
       <Route path="/video/:videoId" element={<ProtectedRoute><VideoPlayer /></ProtectedRoute>} />
       <Route path="/quiz/:quizId" element={<ProtectedRoute><QuizPage /></ProtectedRoute>} />
