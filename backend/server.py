@@ -698,6 +698,49 @@ async def remove_assignment(assignment_id: str, request: Request):
 
 # ============ REPORT ROUTES ============
 
+@api_router.get("/leaderboard")
+async def get_leaderboard(request: Request):
+    await get_current_user(request)
+    distributors = await db.users.find({'role': 'distributor'}, {'_id': 0, 'password_hash': 0}).to_list(1000)
+    leaderboard = []
+    for user in distributors:
+        assignments = await db.assignments.find({'user_id': user['id']}, {'_id': 0}).to_list(100)
+        completed_courses = sum(1 for a in assignments if a.get('completed'))
+        total_assigned = len(assignments)
+        progress_list = await db.progress.find({'user_id': user['id']}, {'_id': 0}).to_list(10000)
+        total_quiz_passed = sum(1 for p in progress_list if p.get('quiz_passed'))
+        total_quiz_attempts = sum(p.get('quiz_attempts', 0) for p in progress_list)
+        total_videos_watched = sum(1 for p in progress_list if p.get('video_watched'))
+        total_score_sum = sum(p.get('last_quiz_score', 0) for p in progress_list if p.get('quiz_passed'))
+        avg_quiz_score = (total_score_sum / total_quiz_passed) if total_quiz_passed > 0 else 0
+        # Points: completed courses * 100 + quizzes passed * 20 + videos watched * 5
+        points = completed_courses * 100 + total_quiz_passed * 20 + total_videos_watched * 5
+        # Overall progress across all assigned courses
+        total_videos_in_courses = 0
+        for a in assignments:
+            vc = await db.videos.count_documents({'course_id': a['course_id']})
+            total_videos_in_courses += vc
+        overall_progress = (total_videos_watched / total_videos_in_courses * 100) if total_videos_in_courses > 0 else 0
+        leaderboard.append({
+            'user_id': user['id'],
+            'full_name': user['full_name'],
+            'email': user['email'],
+            'level': user.get('level', 'baslangic'),
+            'badges': user.get('badges', []),
+            'completed_courses': completed_courses,
+            'total_assigned': total_assigned,
+            'total_quiz_passed': total_quiz_passed,
+            'total_quiz_attempts': total_quiz_attempts,
+            'total_videos_watched': total_videos_watched,
+            'avg_quiz_score': round(avg_quiz_score, 1),
+            'overall_progress': round(overall_progress, 1),
+            'points': points
+        })
+    leaderboard.sort(key=lambda x: (-x['points'], -x['completed_courses'], -x['avg_quiz_score']))
+    for i, entry in enumerate(leaderboard):
+        entry['rank'] = i + 1
+    return leaderboard
+
 @api_router.get("/reports/dashboard")
 async def get_dashboard_reports(request: Request):
     current = await get_current_user(request)
