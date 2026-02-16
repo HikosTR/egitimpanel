@@ -1052,6 +1052,81 @@ async def download_certificate(cert_id: str, request: Request):
     c.save()
     return FileResponse(str(pdf_path), media_type='application/pdf', filename=f'sertifika_{cert_id}.pdf')
 
+@api_router.get("/certificates/{cert_id}/story-image")
+async def certificate_story_image(cert_id: str, request: Request):
+    cert = await db.certificates.find_one({'id': cert_id}, {'_id': 0})
+    if not cert:
+        raise HTTPException(status_code=404, detail='Sertifika bulunamadi')
+    user = await db.users.find_one({'id': cert['user_id']}, {'_id': 0})
+    course = await db.courses.find_one({'id': cert['course_id']}, {'_id': 0})
+    upper_leader_name = ''
+    if user and user.get('upper_leader'):
+        leader = await db.users.find_one({'id': user['upper_leader']}, {'_id': 0, 'full_name': 1})
+        if leader:
+            upper_leader_name = leader.get('full_name', '')
+    from PIL import Image, ImageDraw, ImageFont
+    W, H = 1080, 1920
+    img = Image.new('RGB', (W, H), '#111111')
+    draw = ImageDraw.Draw(img)
+    font_path = str(FONTS_DIR / 'DejaVuSans.ttf')
+    font_bold_path = str(FONTS_DIR / 'DejaVuSans-Bold.ttf')
+    font_title = ImageFont.truetype(font_bold_path, 64)
+    font_subtitle = ImageFont.truetype(font_path, 36)
+    font_name = ImageFont.truetype(font_bold_path, 54)
+    font_body = ImageFont.truetype(font_path, 30)
+    font_small = ImageFont.truetype(font_path, 24)
+    font_leader = ImageFont.truetype(font_bold_path, 28)
+    # Green border
+    draw.rectangle([30, 30, W - 30, H - 30], outline='#00C853', width=3)
+    # Inner accent lines
+    draw.rectangle([50, 50, W - 50, H - 50], outline='#1a1a1a', width=1)
+    # Top decorative line
+    draw.rectangle([100, 300, W - 100, 303], fill='#00C853')
+    # Title
+    draw.text((W / 2, 200), u'PROF\u0130T TEAM', fill='#00C853', font=font_title, anchor='mm')
+    # Subtitle
+    draw.text((W / 2, 370), u'BA\u015eARI SERT\u0130F\u0130KASI', fill='#FFFFFF', font=font_subtitle, anchor='mm')
+    # Decorative line below subtitle
+    draw.rectangle([100, 420, W - 100, 423], fill='#00C853')
+    # Trophy icon area
+    draw.text((W / 2, 530), u'\u2605', fill='#00C853', font=ImageFont.truetype(font_path, 80), anchor='mm')
+    # Body text
+    draw.text((W / 2, 660), u'Bu sertifika ile onayla\u0131r ki', fill='#AAAAAA', font=font_body, anchor='mm')
+    # User name
+    user_name = user['full_name'] if user else 'Bilinmeyen'
+    draw.text((W / 2, 770), user_name, fill='#00C853', font=font_name, anchor='mm')
+    # Decorative lines around name
+    draw.rectangle([200, 820, W - 200, 822], fill='#333333')
+    # Course title
+    course_title = course['title'] if course else u'Bilinmeyen E\u011fitim'
+    draw.text((W / 2, 900), f'"{course_title}"', fill='#FFFFFF', font=font_body, anchor='mm')
+    draw.text((W / 2, 950), u'e\u011fitimini ba\u015far\u0131yla tamamlam\u0131\u015ft\u0131r.', fill='#FFFFFF', font=font_body, anchor='mm')
+    # Date
+    completed_at = cert.get('completed_at', '')
+    if completed_at:
+        try:
+            dt = datetime.fromisoformat(completed_at)
+            date_str = dt.strftime('%d.%m.%Y')
+        except Exception:
+            date_str = completed_at[:10]
+    else:
+        date_str = ''
+    draw.text((W / 2, 1050), f'Tamamlanma Tarihi: {date_str}', fill='#888888', font=font_small, anchor='mm')
+    # Upper leader message
+    if upper_leader_name:
+        draw.rectangle([100, 1200, W - 100, 1203], fill='#00C853')
+        draw.text((W / 2, 1280), u'Tebrik ederim,', fill='#00C853', font=font_leader, anchor='mm')
+        draw.text((W / 2, 1330), u'Ba\u015far\u0131lar\u0131n ve E\u011fitiminin', fill='#00C853', font=font_leader, anchor='mm')
+        draw.text((W / 2, 1380), u'Devam\u0131n\u0131 Dilerim.', fill='#00C853', font=font_leader, anchor='mm')
+        draw.text((W / 2, 1450), f'\u2014 {upper_leader_name}', fill='#FFFFFF', font=font_small, anchor='mm')
+    # Bottom branding
+    draw.rectangle([100, H - 200, W - 100, H - 197], fill='#00C853')
+    draw.text((W / 2, H - 140), u'PROF\u0130T TEAM AKADEM\u0130', fill='#555555', font=font_small, anchor='mm')
+    # Save
+    img_path = UPLOAD_DIR / 'certificates' / f'{cert_id}_story.png'
+    img.save(str(img_path), 'PNG', quality=95)
+    return FileResponse(str(img_path), media_type='image/png', filename=f'sertifika_{cert_id}_story.png')
+
 @api_router.get("/certificates/{cert_id}/verify")
 async def verify_certificate(cert_id: str):
     cert = await db.certificates.find_one({'id': cert_id}, {'_id': 0})
