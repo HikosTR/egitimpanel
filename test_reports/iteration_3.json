@@ -1,0 +1,45 @@
+{
+  "summary": "Completed testing of new Instagram Story sharing feature. All tests passed: story-image endpoint returns valid 1080x1920 PNG, share button with Instagram gradient visible, download fallback works on desktop.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_story_image.py",
+    "/app/backend/tests/test_certificates.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [
+    "/app/backend/tests/test_story_image.py"
+  ],
+  "success_rate": {
+    "backend": "100% (21/21 tests passed)",
+    "frontend": "100% (login, profile, share button, download all working)"
+  },
+  "test_credentials": {
+    "super_admin": "admin@profitteam.tr / 19901990Aa.",
+    "distributor": "testdist@profitteam.tr / Test1234."
+  },
+  "seed_data_creation": "Used existing test certificate 6ef138ab-889e-4206-9a10-9f3af19c9a2b",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Instagram Story sharing feature fully tested. Story image endpoint at /api/certificates/{cert_id}/story-image returns 1080x1920 PNG. Share button uses Web Share API on mobile, downloads PNG on desktop. Test distributor has 1 certificate (BESLENME EĞİTİMİ). Upper Leader name (Muhammed Atak) included in story image.",
+  "verified_features": [
+    "GET /api/certificates/{cert_id}/story-image - returns valid PNG (1080x1920 vertical format)",
+    "GET /api/certificates/{cert_id}/story-image - PNG has dark background (#111111)",
+    "GET /api/certificates/{cert_id}/story-image - PNG has green accent (#00C853)",
+    "GET /api/certificates/{cert_id}/story-image - Image contains certificate content (not blank)",
+    "GET /api/certificates/{cert_id}/download - PDF still works (regression test)",
+    "POST /api/auth/login - distributor login works",
+    "Profile page shows 'PAYLAŞ' button with Instagram gradient (purple→red→orange)",
+    "Share button click triggers PNG download on desktop (fallback from Web Share API)",
+    "PDF download button still present and functional"
+  ]
+}
