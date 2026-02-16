@@ -20,6 +20,7 @@ const adminLinks = [
 
 const distributorLinks = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+  { to: '/leaderboard', icon: Trophy, label: 'Siralama' },
   { to: '/profile', icon: UserCircle, label: 'Profil' },
 ];
 
