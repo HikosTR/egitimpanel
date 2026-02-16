@@ -192,9 +192,9 @@ export default function ProfilePage() {
                   ) : (
                     <div className="space-y-3">
                       {certificates.map((cert) => (
-                        <div key={cert.id} className="flex items-center justify-between p-4 rounded-lg bg-gray-50" data-testid={`cert-${cert.id}`}>
-                          <div className="flex items-center gap-3">
-                            <Award className="w-6 h-6 text-[#F59E0B]" />
+                        <div key={cert.id} className="p-4 rounded-lg bg-gray-50" data-testid={`cert-${cert.id}`}>
+                          <div className="flex items-center gap-3 mb-3">
+                            <Award className="w-6 h-6 text-[#F59E0B] flex-shrink-0" />
                             <div>
                               <p className="font-semibold text-sm text-[#111111]">{cert.course_title}</p>
                               <p className="text-xs text-gray-500">
@@ -202,15 +202,26 @@ export default function ProfilePage() {
                               </p>
                             </div>
                           </div>
-                          <a
-                            href={`${BACKEND_URL}/api/certificates/${cert.id}/download`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-1 px-3 py-1.5 bg-[#00C853] text-white rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-[#00B848] transition-colors"
-                            data-testid={`download-cert-${cert.id}`}
-                          >
-                            <Download className="w-3 h-3" /> Indir
-                          </a>
+                          <div className="flex items-center gap-2">
+                            <a
+                              href={`${BACKEND_URL}/api/certificates/${cert.id}/download`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-1 px-3 py-1.5 bg-[#00C853] text-white rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-[#00B848] transition-colors"
+                              data-testid={`download-cert-${cert.id}`}
+                            >
+                              <Download className="w-3 h-3" /> PDF
+                            </a>
+                            <button
+                              onClick={() => handleShareInstagram(cert.id)}
+                              disabled={sharingCertId === cert.id}
+                              className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] text-white rounded-lg text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-opacity disabled:opacity-50"
+                              data-testid={`share-cert-${cert.id}`}
+                            >
+                              <Share2 className="w-3 h-3" />
+                              {sharingCertId === cert.id ? 'Hazırlanıyor...' : 'Paylaş'}
+                            </button>
+                          </div>
                         </div>
                       ))}
                     </div>
