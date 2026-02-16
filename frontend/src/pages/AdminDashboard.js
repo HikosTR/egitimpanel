@@ -28,7 +28,7 @@ export default function AdminDashboard() {
   return (
     <div className="flex min-h-screen bg-[#F5F7FA]" data-testid="admin-dashboard">
       <Sidebar />
-      <main className="flex-1 p-6 lg:p-10">
+      <main className="flex-1 p-6 lg:p-10 pt-16 lg:pt-10">
         <div className="mb-10">
           <h1
             className="text-4xl font-bold text-[#111111] uppercase tracking-tight"
