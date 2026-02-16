@@ -696,6 +696,86 @@ async def remove_assignment(assignment_id: str, request: Request):
     await db.assignments.delete_one({'id': assignment_id})
     return {'message': 'Atama kaldirildi'}
 
+# ============ QUALIFICATION ROUTES ============
+
+class QualificationCreate(BaseModel):
+    title: str
+    cover_image: str = ''
+    content: str = ''
+    category: str = 'genel'
+
+class QualificationUpdate(BaseModel):
+    title: Optional[str] = None
+    cover_image: Optional[str] = None
+    content: Optional[str] = None
+    category: Optional[str] = None
+
+@api_router.post("/qualifications")
+async def create_qualification(data: QualificationCreate, request: Request):
+    current = await get_current_user(request)
+    if current['role'] not in ['super_admin', 'admin']:
+        raise HTTPException(status_code=403, detail='Yetkiniz yok')
+    qual = {
+        'id': str(uuid.uuid4()),
+        'title': data.title,
+        'cover_image': data.cover_image,
+        'content': data.content,
+        'category': data.category,
+        'author_id': current['id'],
+        'author_name': current['full_name'],
+        'created_at': datetime.now(timezone.utc).isoformat(),
+        'updated_at': datetime.now(timezone.utc).isoformat()
+    }
+    await db.qualifications.insert_one(qual)
+    return {k: v for k, v in qual.items() if k != '_id'}
+
+@api_router.get("/qualifications")
+async def list_qualifications(request: Request):
+    await get_current_user(request)
+    quals = await db.qualifications.find({}, {'_id': 0}).sort('created_at', -1).to_list(1000)
+    return quals
+
+@api_router.get("/qualifications/{qual_id}")
+async def get_qualification(qual_id: str, request: Request):
+    await get_current_user(request)
+    qual = await db.qualifications.find_one({'id': qual_id}, {'_id': 0})
+    if not qual:
+        raise HTTPException(status_code=404, detail='Kalifikasyon bulunamadi')
+    return qual
+
+@api_router.put("/qualifications/{qual_id}")
+async def update_qualification(qual_id: str, data: QualificationUpdate, request: Request):
+    current = await get_current_user(request)
+    if current['role'] not in ['super_admin', 'admin']:
+        raise HTTPException(status_code=403, detail='Yetkiniz yok')
+    update = {k: v for k, v in data.model_dump().items() if v is not None}
+    update['updated_at'] = datetime.now(timezone.utc).isoformat()
+    if update:
+        await db.qualifications.update_one({'id': qual_id}, {'$set': update})
+    qual = await db.qualifications.find_one({'id': qual_id}, {'_id': 0})
+    return qual
+
+@api_router.delete("/qualifications/{qual_id}")
+async def delete_qualification(qual_id: str, request: Request):
+    current = await get_current_user(request)
+    if current['role'] not in ['super_admin', 'admin']:
+        raise HTTPException(status_code=403, detail='Yetkiniz yok')
+    await db.qualifications.delete_one({'id': qual_id})
+    return {'message': 'Kalifikasyon silindi'}
+
+@api_router.post("/qualifications/upload-image")
+async def upload_qualification_image(file: UploadFile = File(...), request: Request = None):
+    current = await get_current_user(request)
+    if current['role'] not in ['super_admin', 'admin']:
+        raise HTTPException(status_code=403, detail='Yetkiniz yok')
+    file_id = str(uuid.uuid4())
+    ext = file.filename.split('.')[-1] if '.' in file.filename else 'jpg'
+    file_path = UPLOAD_DIR / 'images' / f'qual_{file_id}.{ext}'
+    content = await file.read()
+    with open(file_path, 'wb') as f:
+        f.write(content)
+    return {'url': f'/api/uploads/images/qual_{file_id}.{ext}'}
+
 # ============ REPORT ROUTES ============
 
 @api_router.get("/leaderboard")
