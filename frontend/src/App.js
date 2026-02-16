@@ -13,6 +13,7 @@ import DistributorDashboard from '@/pages/DistributorDashboard';
 import ProfilePage from '@/pages/ProfilePage';
 import ReportsPage from '@/pages/ReportsPage';
 import SettingsPage from '@/pages/SettingsPage';
+import LeaderboardPage from '@/pages/LeaderboardPage';
 
 function AppRoutes() {
   const { user, loading } = useAuth();
