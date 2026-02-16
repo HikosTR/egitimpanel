@@ -3,7 +3,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Sidebar } from '@/components/Sidebar';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { Trophy, Medal, Star, TrendingUp, Target, Flame, ChevronUp, ChevronDown, Minus } from 'lucide-react';
+import { Trophy, Medal, Star, Target, Flame } from 'lucide-react';
 
 export default function LeaderboardPage() {
   const { user, api } = useAuth();
@@ -18,23 +18,16 @@ export default function LeaderboardPage() {
   }, [api]);
 
   const getRankIcon = (rank) => {
-    if (rank === 1) return <Trophy className="w-6 h-6 text-yellow-500" />;
-    if (rank === 2) return <Medal className="w-6 h-6 text-gray-400" />;
-    if (rank === 3) return <Medal className="w-6 h-6 text-amber-700" />;
-    return <span className="w-6 h-6 flex items-center justify-center text-sm font-bold text-gray-400">{rank}</span>;
-  };
-
-  const getRankBg = (rank) => {
-    if (rank === 1) return 'bg-gradient-to-r from-yellow-50 to-amber-50 border-l-4 border-l-yellow-400';
-    if (rank === 2) return 'bg-gradient-to-r from-gray-50 to-slate-50 border-l-4 border-l-gray-400';
-    if (rank === 3) return 'bg-gradient-to-r from-orange-50 to-amber-50 border-l-4 border-l-amber-600';
-    return 'bg-white border-l-4 border-l-transparent hover:border-l-[#00C853]';
+    if (rank === 1) return <Trophy className="w-5 h-5 text-yellow-500" />;
+    if (rank === 2) return <Medal className="w-5 h-5 text-gray-400" />;
+    if (rank === 3) return <Medal className="w-5 h-5 text-amber-700" />;
+    return <span className="w-5 h-5 flex items-center justify-center text-xs font-bold text-gray-400">{rank}</span>;
   };
 
   const levelLabels = {
     baslangic: 'Baslangic',
     aktif_distributor: 'Aktif',
-    takim_kurucu: 'Takim Kurucu',
+    takim_kurucu: 'T. Kurucu',
     lider: 'Lider',
     elite_leader: 'Elite'
   };
@@ -52,22 +45,22 @@ export default function LeaderboardPage() {
   return (
     <div className="flex min-h-screen bg-[#F5F7FA]" data-testid="leaderboard-page">
       <Sidebar />
-      <main className="flex-1 p-6 lg:p-10">
+      <main className="flex-1 p-4 sm:p-6 lg:p-10 pt-16 lg:pt-10">
         {/* Header */}
-        <div className="mb-10">
+        <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-xl bg-yellow-400/10 flex items-center justify-center">
               <Trophy className="w-5 h-5 text-yellow-500" />
             </div>
             <h1
-              className="text-4xl font-bold text-[#111111] uppercase tracking-tight"
+              className="text-3xl sm:text-4xl font-bold text-[#111111] uppercase tracking-tight"
               style={{ fontFamily: 'Barlow Condensed' }}
               data-testid="leaderboard-title"
             >
               Liderlik Tablosu
             </h1>
           </div>
-          <p className="text-gray-500 text-sm ml-[52px]">En iyi egitim alan distributor'ler - Puan siralamasi</p>
+          <p className="text-gray-500 text-sm ml-[52px]">Puan siralamasi</p>
         </div>
 
         {loading ? (
@@ -88,32 +81,32 @@ export default function LeaderboardPage() {
           <>
             {/* My Position Banner */}
             {myRank && (
-              <Card className="bg-[#111111] shadow-lg mb-8 overflow-hidden animate-fadeIn" data-testid="my-rank-card">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="w-14 h-14 rounded-full bg-[#00C853]/20 flex items-center justify-center">
-                        <span className="text-2xl font-black text-[#00C853]" style={{ fontFamily: 'Barlow Condensed' }}>
+              <Card className="bg-[#111111] shadow-lg mb-6 overflow-hidden animate-fadeIn" data-testid="my-rank-card">
+                <CardContent className="p-4 sm:p-6">
+                  <div className="flex items-center justify-between flex-wrap gap-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-full bg-[#00C853]/20 flex items-center justify-center">
+                        <span className="text-xl font-black text-[#00C853]" style={{ fontFamily: 'Barlow Condensed' }}>
                           {myRank.rank}
                         </span>
                       </div>
                       <div>
-                        <p className="text-white font-bold text-lg">{myRank.full_name}</p>
-                        <p className="text-gray-400 text-xs uppercase tracking-wider">Senin Siran</p>
+                        <p className="text-white font-bold">{myRank.full_name}</p>
+                        <p className="text-gray-400 text-[10px] uppercase tracking-wider">Senin Siran</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-8">
+                    <div className="flex items-center gap-6">
                       <div className="text-center">
-                        <p className="text-2xl font-bold text-[#00C853]" style={{ fontFamily: 'Barlow Condensed' }}>{myRank.points}</p>
-                        <p className="text-[10px] text-gray-500 uppercase tracking-wider">Puan</p>
+                        <p className="text-xl font-bold text-[#00C853]" style={{ fontFamily: 'Barlow Condensed' }}>{myRank.points}</p>
+                        <p className="text-[10px] text-gray-500 uppercase">Puan</p>
                       </div>
                       <div className="text-center">
-                        <p className="text-2xl font-bold text-white" style={{ fontFamily: 'Barlow Condensed' }}>{myRank.completed_courses}</p>
-                        <p className="text-[10px] text-gray-500 uppercase tracking-wider">Tamamlanan</p>
+                        <p className="text-xl font-bold text-white" style={{ fontFamily: 'Barlow Condensed' }}>{myRank.completed_courses}</p>
+                        <p className="text-[10px] text-gray-500 uppercase">Tamamlanan</p>
                       </div>
                       <div className="text-center">
-                        <p className="text-2xl font-bold text-white" style={{ fontFamily: 'Barlow Condensed' }}>%{myRank.avg_quiz_score}</p>
-                        <p className="text-[10px] text-gray-500 uppercase tracking-wider">Quiz Ort.</p>
+                        <p className="text-xl font-bold text-white" style={{ fontFamily: 'Barlow Condensed' }}>%{myRank.avg_quiz_score}</p>
+                        <p className="text-[10px] text-gray-500 uppercase">Quiz Ort.</p>
                       </div>
                     </div>
                   </div>
@@ -121,139 +114,87 @@ export default function LeaderboardPage() {
               </Card>
             )}
 
-            {/* Top 3 Podium */}
+            {/* Top 3 Podium - visible on sm+ */}
             {leaderboard.length >= 3 && (
-              <div className="grid grid-cols-3 gap-4 mb-8">
-                {/* 2nd Place */}
-                <Card className="bg-white shadow-sm animate-fadeIn border-t-4 border-t-gray-400" style={{ animationDelay: '100ms' }} data-testid="podium-2">
-                  <CardContent className="p-6 text-center">
-                    <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-3">
-                      <Medal className="w-6 h-6 text-gray-400" />
-                    </div>
-                    <p className="text-xs text-gray-400 uppercase tracking-wider font-semibold mb-1">2. Sira</p>
-                    <p className="font-bold text-[#111111] truncate">{leaderboard[1].full_name}</p>
-                    <p className="text-2xl font-black text-gray-400 mt-1" style={{ fontFamily: 'Barlow Condensed' }}>{leaderboard[1].points} P</p>
-                    <div className="mt-2">
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase" style={{ color: levelColors[leaderboard[1].level], backgroundColor: `${levelColors[leaderboard[1].level]}15` }}>
-                        {levelLabels[leaderboard[1].level]}
-                      </span>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* 1st Place */}
-                <Card className="bg-white shadow-md animate-fadeIn border-t-4 border-t-yellow-400 -mt-4" data-testid="podium-1">
-                  <CardContent className="p-6 text-center">
-                    <div className="w-14 h-14 rounded-full bg-yellow-50 flex items-center justify-center mx-auto mb-3">
-                      <Trophy className="w-7 h-7 text-yellow-500" />
-                    </div>
-                    <p className="text-xs text-yellow-500 uppercase tracking-wider font-bold mb-1">Sampiyon</p>
-                    <p className="font-bold text-[#111111] text-lg truncate">{leaderboard[0].full_name}</p>
-                    <p className="text-3xl font-black text-yellow-500 mt-1" style={{ fontFamily: 'Barlow Condensed' }}>{leaderboard[0].points} P</p>
-                    <div className="mt-2">
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase" style={{ color: levelColors[leaderboard[0].level], backgroundColor: `${levelColors[leaderboard[0].level]}15` }}>
-                        {levelLabels[leaderboard[0].level]}
-                      </span>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* 3rd Place */}
-                <Card className="bg-white shadow-sm animate-fadeIn border-t-4 border-t-amber-600" style={{ animationDelay: '200ms' }} data-testid="podium-3">
-                  <CardContent className="p-6 text-center">
-                    <div className="w-12 h-12 rounded-full bg-orange-50 flex items-center justify-center mx-auto mb-3">
-                      <Medal className="w-6 h-6 text-amber-700" />
-                    </div>
-                    <p className="text-xs text-amber-700 uppercase tracking-wider font-semibold mb-1">3. Sira</p>
-                    <p className="font-bold text-[#111111] truncate">{leaderboard[2].full_name}</p>
-                    <p className="text-2xl font-black text-amber-700 mt-1" style={{ fontFamily: 'Barlow Condensed' }}>{leaderboard[2].points} P</p>
-                    <div className="mt-2">
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase" style={{ color: levelColors[leaderboard[2].level], backgroundColor: `${levelColors[leaderboard[2].level]}15` }}>
-                        {levelLabels[leaderboard[2].level]}
-                      </span>
-                    </div>
-                  </CardContent>
-                </Card>
+              <div className="hidden sm:grid grid-cols-3 gap-3 mb-6">
+                {[1, 0, 2].map((idx) => {
+                  const entry = leaderboard[idx];
+                  const isFirst = idx === 0;
+                  const borderColor = idx === 0 ? 'border-t-yellow-400' : idx === 1 ? 'border-t-gray-400' : 'border-t-amber-600';
+                  const label = idx === 0 ? 'Sampiyon' : `${idx === 1 ? '2' : '3'}. Sira`;
+                  const labelColor = idx === 0 ? 'text-yellow-500' : idx === 1 ? 'text-gray-400' : 'text-amber-700';
+                  const iconColor = idx === 0 ? 'text-yellow-500' : idx === 1 ? 'text-gray-400' : 'text-amber-700';
+                  const bgColor = idx === 0 ? 'bg-yellow-50' : idx === 1 ? 'bg-gray-100' : 'bg-orange-50';
+                  return (
+                    <Card key={entry.user_id} className={`bg-white shadow-sm border-t-4 ${borderColor} ${isFirst ? '-mt-2' : ''}`} data-testid={`podium-${idx}`}>
+                      <CardContent className="p-4 text-center">
+                        <div className={`w-10 h-10 rounded-full ${bgColor} flex items-center justify-center mx-auto mb-2`}>
+                          {idx === 0 ? <Trophy className={`w-5 h-5 ${iconColor}`} /> : <Medal className={`w-5 h-5 ${iconColor}`} />}
+                        </div>
+                        <p className={`text-[10px] ${labelColor} uppercase tracking-wider font-bold mb-1`}>{label}</p>
+                        <p className="font-bold text-[#111111] text-sm truncate">{entry.full_name}</p>
+                        <p className={`text-xl font-black mt-1 ${idx === 0 ? 'text-yellow-500' : idx === 1 ? 'text-gray-400' : 'text-amber-700'}`} style={{ fontFamily: 'Barlow Condensed' }}>
+                          {entry.points} P
+                        </p>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
               </div>
             )}
 
-            {/* League Table */}
-            <Card className="bg-white shadow-sm" data-testid="league-table">
+            {/* Desktop Table - hidden on mobile */}
+            <Card className="bg-white shadow-sm hidden lg:block" data-testid="league-table-desktop">
               <CardContent className="p-0">
-                {/* Table Header */}
-                <div className="grid grid-cols-12 gap-2 px-6 py-4 border-b border-gray-100 text-[10px] text-gray-400 uppercase tracking-widest font-bold">
+                <div className="grid grid-cols-12 gap-2 px-6 py-3 border-b border-gray-100 text-[10px] text-gray-400 uppercase tracking-widest font-bold">
                   <div className="col-span-1 text-center">#</div>
                   <div className="col-span-3">Distributor</div>
                   <div className="col-span-1 text-center">Seviye</div>
                   <div className="col-span-1 text-center">Puan</div>
                   <div className="col-span-1 text-center">Tamamlanan</div>
-                  <div className="col-span-1 text-center">Quiz Gecen</div>
+                  <div className="col-span-1 text-center">Quiz</div>
                   <div className="col-span-1 text-center">Quiz Ort.</div>
                   <div className="col-span-3">Ilerleme</div>
                 </div>
-
-                {/* Table Body */}
                 {leaderboard.map((entry, i) => {
                   const isMe = entry.user_id === user?.id;
+                  const rankBg = entry.rank === 1 ? 'bg-yellow-50/50 border-l-4 border-l-yellow-400'
+                    : entry.rank === 2 ? 'bg-gray-50/50 border-l-4 border-l-gray-400'
+                    : entry.rank === 3 ? 'bg-orange-50/50 border-l-4 border-l-amber-600'
+                    : 'border-l-4 border-l-transparent hover:border-l-[#00C853]';
                   return (
                     <div
                       key={entry.user_id}
-                      className={`grid grid-cols-12 gap-2 px-6 py-4 items-center transition-all duration-200 hover:bg-gray-50 animate-fadeIn ${getRankBg(entry.rank)} ${isMe ? 'ring-2 ring-[#00C853]/30 ring-inset' : ''}`}
-                      style={{ animationDelay: `${i * 40}ms` }}
+                      className={`grid grid-cols-12 gap-2 px-6 py-3 items-center transition-all hover:bg-gray-50 ${rankBg} ${isMe ? 'ring-2 ring-[#00C853]/20 ring-inset' : ''}`}
                       data-testid={`leaderboard-row-${entry.rank}`}
                     >
-                      {/* Rank */}
-                      <div className="col-span-1 flex justify-center">
-                        {getRankIcon(entry.rank)}
-                      </div>
-
-                      {/* Name */}
-                      <div className="col-span-3 flex items-center gap-3">
-                        <div className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold ${isMe ? 'bg-[#00C853] text-white' : 'bg-gray-100 text-gray-500'}`}>
+                      <div className="col-span-1 flex justify-center">{getRankIcon(entry.rank)}</div>
+                      <div className="col-span-3 flex items-center gap-2 min-w-0">
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${isMe ? 'bg-[#00C853] text-white' : 'bg-gray-100 text-gray-500'}`}>
                           {entry.full_name.charAt(0)}
                         </div>
                         <div className="min-w-0">
                           <p className={`text-sm font-semibold truncate ${isMe ? 'text-[#00C853]' : 'text-[#111111]'}`}>
-                            {entry.full_name}
-                            {isMe && <span className="ml-1 text-[10px] text-[#00C853]">(Sen)</span>}
+                            {entry.full_name} {isMe && <span className="text-[10px]">(Sen)</span>}
                           </p>
-                          <p className="text-[10px] text-gray-400 truncate">{entry.email}</p>
                         </div>
                       </div>
-
-                      {/* Level */}
                       <div className="col-span-1 text-center">
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider" style={{ color: levelColors[entry.level], backgroundColor: `${levelColors[entry.level]}15` }}>
+                        <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold" style={{ color: levelColors[entry.level], backgroundColor: `${levelColors[entry.level]}15` }}>
                           {levelLabels[entry.level]}
                         </span>
                       </div>
-
-                      {/* Points */}
                       <div className="col-span-1 text-center">
-                        <span className="text-lg font-black text-[#111111]" style={{ fontFamily: 'Barlow Condensed' }}>
-                          {entry.points}
-                        </span>
+                        <span className="text-base font-black text-[#111111]" style={{ fontFamily: 'Barlow Condensed' }}>{entry.points}</span>
                       </div>
-
-                      {/* Completed Courses */}
+                      <div className="col-span-1 text-center text-sm">
+                        <span className="font-bold text-[#00C853]">{entry.completed_courses}</span>
+                        <span className="text-gray-400">/{entry.total_assigned}</span>
+                      </div>
+                      <div className="col-span-1 text-center text-sm font-bold text-[#111111]">{entry.total_quiz_passed}</div>
                       <div className="col-span-1 text-center">
-                        <span className="text-sm font-bold text-[#00C853]">{entry.completed_courses}</span>
-                        <span className="text-xs text-gray-400">/{entry.total_assigned}</span>
+                        <span className={`text-sm font-bold ${entry.avg_quiz_score >= 80 ? 'text-[#00C853]' : 'text-gray-400'}`}>%{entry.avg_quiz_score}</span>
                       </div>
-
-                      {/* Quiz Passed */}
-                      <div className="col-span-1 text-center">
-                        <span className="text-sm font-bold text-[#111111]">{entry.total_quiz_passed}</span>
-                      </div>
-
-                      {/* Avg Quiz Score */}
-                      <div className="col-span-1 text-center">
-                        <span className={`text-sm font-bold ${entry.avg_quiz_score >= 80 ? 'text-[#00C853]' : entry.avg_quiz_score >= 50 ? 'text-[#F59E0B]' : 'text-gray-400'}`}>
-                          %{entry.avg_quiz_score}
-                        </span>
-                      </div>
-
-                      {/* Progress Bar */}
                       <div className="col-span-3 flex items-center gap-2">
                         <Progress value={entry.overall_progress} className="h-2 flex-1 bg-gray-100" />
                         <span className="text-xs font-bold text-gray-500 w-10 text-right">%{entry.overall_progress}</span>
@@ -264,36 +205,101 @@ export default function LeaderboardPage() {
               </CardContent>
             </Card>
 
+            {/* Mobile Card List */}
+            <div className="lg:hidden space-y-3" data-testid="league-table-mobile">
+              {leaderboard.map((entry, i) => {
+                const isMe = entry.user_id === user?.id;
+                const rankBorder = entry.rank === 1 ? 'border-l-yellow-400'
+                  : entry.rank === 2 ? 'border-l-gray-400'
+                  : entry.rank === 3 ? 'border-l-amber-600'
+                  : 'border-l-gray-200';
+                return (
+                  <Card
+                    key={entry.user_id}
+                    className={`bg-white shadow-sm border-l-4 ${rankBorder} ${isMe ? 'ring-2 ring-[#00C853]/20' : ''} animate-fadeIn`}
+                    style={{ animationDelay: `${i * 40}ms` }}
+                    data-testid={`leaderboard-mobile-${entry.rank}`}
+                  >
+                    <CardContent className="p-4">
+                      {/* Top: Rank + Name + Points */}
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-3">
+                          <div className="flex items-center justify-center w-8 h-8">
+                            {getRankIcon(entry.rank)}
+                          </div>
+                          <div className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold ${isMe ? 'bg-[#00C853] text-white' : 'bg-gray-100 text-gray-500'}`}>
+                            {entry.full_name.charAt(0)}
+                          </div>
+                          <div className="min-w-0">
+                            <p className={`text-sm font-bold truncate ${isMe ? 'text-[#00C853]' : 'text-[#111111]'}`}>
+                              {entry.full_name} {isMe && <span className="text-[10px]">(Sen)</span>}
+                            </p>
+                            <span className="px-1.5 py-0.5 rounded-full text-[9px] font-bold" style={{ color: levelColors[entry.level], backgroundColor: `${levelColors[entry.level]}15` }}>
+                              {levelLabels[entry.level]}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="text-right flex-shrink-0">
+                          <p className="text-xl font-black text-[#111111]" style={{ fontFamily: 'Barlow Condensed' }}>{entry.points}</p>
+                          <p className="text-[9px] text-gray-400 uppercase">Puan</p>
+                        </div>
+                      </div>
+
+                      {/* Stats Row */}
+                      <div className="grid grid-cols-4 gap-2 text-center mb-3">
+                        <div className="bg-gray-50 rounded-lg py-1.5 px-1">
+                          <p className="text-sm font-bold text-[#00C853]">{entry.completed_courses}<span className="text-gray-400 font-normal">/{entry.total_assigned}</span></p>
+                          <p className="text-[9px] text-gray-400 uppercase">Egitim</p>
+                        </div>
+                        <div className="bg-gray-50 rounded-lg py-1.5 px-1">
+                          <p className="text-sm font-bold text-[#111111]">{entry.total_quiz_passed}</p>
+                          <p className="text-[9px] text-gray-400 uppercase">Quiz</p>
+                        </div>
+                        <div className="bg-gray-50 rounded-lg py-1.5 px-1">
+                          <p className={`text-sm font-bold ${entry.avg_quiz_score >= 80 ? 'text-[#00C853]' : 'text-gray-400'}`}>%{entry.avg_quiz_score}</p>
+                          <p className="text-[9px] text-gray-400 uppercase">Ortalama</p>
+                        </div>
+                        <div className="bg-gray-50 rounded-lg py-1.5 px-1">
+                          <p className="text-sm font-bold text-[#111111]">{entry.total_videos_watched}</p>
+                          <p className="text-[9px] text-gray-400 uppercase">Video</p>
+                        </div>
+                      </div>
+
+                      {/* Progress Bar */}
+                      <div className="flex items-center gap-2">
+                        <Progress value={entry.overall_progress} className="h-1.5 flex-1 bg-gray-100" />
+                        <span className="text-[10px] font-bold text-gray-500 w-8 text-right">%{entry.overall_progress}</span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+
             {/* Points Info */}
             <Card className="bg-white shadow-sm mt-6" data-testid="points-info">
-              <CardContent className="p-6">
+              <CardContent className="p-4 sm:p-6">
                 <h3 className="text-sm font-bold text-[#111111] uppercase tracking-wider mb-3" style={{ fontFamily: 'Barlow Condensed' }}>
                   Puan Sistemi
                 </h3>
-                <div className="flex flex-wrap gap-6 text-xs text-gray-500">
+                <div className="flex flex-wrap gap-4 sm:gap-6 text-xs text-gray-500">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-[#00C853]/10 flex items-center justify-center">
-                      <Target className="w-4 h-4 text-[#00C853]" />
+                    <div className="w-7 h-7 rounded-lg bg-[#00C853]/10 flex items-center justify-center">
+                      <Target className="w-3.5 h-3.5 text-[#00C853]" />
                     </div>
-                    <div>
-                      <span className="font-bold text-[#111111]">+100</span> Tamamlanan Egitim
-                    </div>
+                    <span><b className="text-[#111111]">+100</b> Egitim</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-[#3B82F6]/10 flex items-center justify-center">
-                      <Star className="w-4 h-4 text-[#3B82F6]" />
+                    <div className="w-7 h-7 rounded-lg bg-[#3B82F6]/10 flex items-center justify-center">
+                      <Star className="w-3.5 h-3.5 text-[#3B82F6]" />
                     </div>
-                    <div>
-                      <span className="font-bold text-[#111111]">+20</span> Gecilen Quiz
-                    </div>
+                    <span><b className="text-[#111111]">+20</b> Quiz</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-[#8B5CF6]/10 flex items-center justify-center">
-                      <Flame className="w-4 h-4 text-[#8B5CF6]" />
+                    <div className="w-7 h-7 rounded-lg bg-[#8B5CF6]/10 flex items-center justify-center">
+                      <Flame className="w-3.5 h-3.5 text-[#8B5CF6]" />
                     </div>
-                    <div>
-                      <span className="font-bold text-[#111111]">+5</span> Izlenen Video
-                    </div>
+                    <span><b className="text-[#111111]">+5</b> Video</span>
                   </div>
                 </div>
               </CardContent>
