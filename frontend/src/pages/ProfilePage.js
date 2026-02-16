@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { LevelBadge } from '@/pages/AdminDashboard';
-import { UserCircle, Award, Download, BookOpen, Trophy } from 'lucide-react';
+import { UserCircle, Award, Download, BookOpen, Trophy, Share2 } from 'lucide-react';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
