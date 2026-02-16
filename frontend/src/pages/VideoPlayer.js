@@ -132,7 +132,7 @@ export default function VideoPlayer() {
   return (
     <div className="flex min-h-screen bg-[#F5F7FA]" data-testid="video-player-page">
       <Sidebar />
-      <main className="flex-1 p-6 lg:p-10">
+      <main className="flex-1 p-6 lg:p-10 pt-16 lg:pt-10">
         <button
           onClick={() => navigate(-1)}
           className="flex items-center gap-2 text-gray-500 hover:text-[#111111] mb-6 transition-colors"
