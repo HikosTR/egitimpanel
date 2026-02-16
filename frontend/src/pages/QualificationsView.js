@@ -54,7 +54,7 @@ export default function QualificationsView() {
   return (
     <div className="flex min-h-screen bg-[#F5F7FA]" data-testid="qualifications-view">
       <Sidebar />
-      <main className="flex-1 p-6 lg:p-10">
+      <main className="flex-1 p-6 lg:p-10 pt-16 lg:pt-10">
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-xl bg-[#00C853]/10 flex items-center justify-center">
