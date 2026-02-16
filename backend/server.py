@@ -32,6 +32,10 @@ UPLOAD_DIR.mkdir(exist_ok=True)
 (UPLOAD_DIR / 'certificates').mkdir(exist_ok=True)
 (UPLOAD_DIR / 'images').mkdir(exist_ok=True)
 
+FONTS_DIR = ROOT_DIR / 'fonts'
+pdfmetrics.registerFont(TTFont('DejaVuSans', str(FONTS_DIR / 'DejaVuSans.ttf')))
+pdfmetrics.registerFont(TTFont('DejaVuSans-Bold', str(FONTS_DIR / 'DejaVuSans-Bold.ttf')))
+
 JWT_SECRET = os.environ.get('JWT_SECRET', 'profit-team-jwt-secret')
 JWT_ALGORITHM = 'HS256'
 JWT_EXPIRATION_HOURS = 24
