@@ -120,7 +120,7 @@ export default function QuizPage() {
   return (
     <div className="flex min-h-screen bg-[#F5F7FA]" data-testid="quiz-page">
       <Sidebar />
-      <main className="flex-1 p-6 lg:p-10 max-w-4xl">
+      <main className="flex-1 p-6 lg:p-10 pt-16 lg:pt-10 max-w-4xl">
         <button
           onClick={() => navigate(-1)}
           className="flex items-center gap-2 text-gray-500 hover:text-[#111111] mb-6 transition-colors"
