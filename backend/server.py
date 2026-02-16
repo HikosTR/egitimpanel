@@ -1000,32 +1000,36 @@ async def download_certificate(cert_id: str, request: Request):
         raise HTTPException(status_code=404, detail='Sertifika bulunamadi')
     user = await db.users.find_one({'id': cert['user_id']}, {'_id': 0})
     course = await db.courses.find_one({'id': cert['course_id']}, {'_id': 0})
+    # Fetch upper leader name
+    upper_leader_name = ''
+    if user and user.get('upper_leader'):
+        leader = await db.users.find_one({'id': user['upper_leader']}, {'_id': 0, 'full_name': 1})
+        if leader:
+            upper_leader_name = leader.get('full_name', '')
     pdf_path = UPLOAD_DIR / 'certificates' / f'{cert_id}.pdf'
     c = canvas.Canvas(str(pdf_path), pagesize=landscape(A4))
     width, height = landscape(A4)
     c.setFillColor(HexColor('#111111'))
     c.rect(0, 0, width, height, fill=True)
-    c.setFillColor(HexColor('#00C853'))
-    c.rect(30, 30, width - 60, height - 60, fill=False, stroke=True)
     c.setStrokeColor(HexColor('#00C853'))
     c.setLineWidth(2)
     c.rect(30, 30, width - 60, height - 60)
     c.setFillColor(HexColor('#00C853'))
-    c.setFont('Helvetica-Bold', 36)
-    c.drawCentredString(width / 2, height - 100, 'PROFIT TEAM')
+    c.setFont('DejaVuSans-Bold', 36)
+    c.drawCentredString(width / 2, height - 100, u'PROFİT TEAM')
     c.setFillColor(HexColor('#FFFFFF'))
-    c.setFont('Helvetica', 18)
-    c.drawCentredString(width / 2, height - 140, 'BASARI SERTIFIKASI')
-    c.setFont('Helvetica', 14)
-    c.drawCentredString(width / 2, height - 200, 'Bu sertifika ile onaylanir ki')
+    c.setFont('DejaVuSans', 18)
+    c.drawCentredString(width / 2, height - 140, u'BAŞARI SERTİFİKASI')
+    c.setFont('DejaVuSans', 14)
+    c.drawCentredString(width / 2, height - 200, u'Bu sertifika ile onaylanır ki')
     c.setFillColor(HexColor('#00C853'))
-    c.setFont('Helvetica-Bold', 28)
+    c.setFont('DejaVuSans-Bold', 28)
     user_name = user['full_name'] if user else 'Bilinmeyen'
     c.drawCentredString(width / 2, height - 250, user_name)
     c.setFillColor(HexColor('#FFFFFF'))
-    c.setFont('Helvetica', 14)
-    course_title = course['title'] if course else 'Bilinmeyen Egitim'
-    c.drawCentredString(width / 2, height - 300, f'"{course_title}" egitimini basariyla tamamlamistir.')
+    c.setFont('DejaVuSans', 14)
+    course_title = course['title'] if course else u'Bilinmeyen Eğitim'
+    c.drawCentredString(width / 2, height - 300, f'"{course_title}" eğitimini başarıyla tamamlamıştır.')
     completed_at = cert.get('completed_at', '')
     if completed_at:
         try:
@@ -1035,17 +1039,18 @@ async def download_certificate(cert_id: str, request: Request):
             date_str = completed_at[:10]
     else:
         date_str = ''
-    c.setFont('Helvetica', 12)
-    c.drawCentredString(width / 2, height - 350, f'Tamamlanma Tarihi: {date_str}')
-    qr = qrcode.make(f'ProFit-Team-Cert-{cert_id}')
-    qr_buffer = io.BytesIO()
-    qr.save(qr_buffer, format='PNG')
-    qr_buffer.seek(0)
-    qr_image = ImageReader(qr_buffer)
-    c.drawImage(qr_image, width / 2 - 40, 60, 80, 80)
+    c.setFont('DejaVuSans', 12)
+    c.drawCentredString(width / 2, height - 340, f'Tamamlanma Tarihi: {date_str}')
+    if upper_leader_name:
+        c.setFillColor(HexColor('#00C853'))
+        c.setFont('DejaVuSans-Bold', 13)
+        c.drawCentredString(width / 2, 100, u'Tebrik ederim, Başarıların ve Eğitiminin Devamını Dilerim.')
+        c.setFont('DejaVuSans', 12)
+        c.setFillColor(HexColor('#FFFFFF'))
+        c.drawCentredString(width / 2, 78, f'\u2014 {upper_leader_name}')
     c.setFillColor(HexColor('#FFFFFF'))
-    c.setFont('Helvetica', 8)
-    c.drawCentredString(width / 2, 50, f'Dogrulama: {cert_id}')
+    c.setFont('DejaVuSans', 8)
+    c.drawCentredString(width / 2, 45, f'Doğrulama: {cert_id}')
     c.save()
     return FileResponse(str(pdf_path), media_type='application/pdf', filename=f'sertifika_{cert_id}.pdf')
 
