@@ -40,12 +40,17 @@ Kapali sistem, liderlik temali, network marketing odakli bir egitim portali. Sad
 - [x] Distributor Dashboard with course cards
 - [x] Profile page with level/badges
 - [x] Reports page (user-based detailed reports)
-- [x] PDF certificate generation with QR code
+- [x] PDF certificate generation with Turkish character support (DejaVu Sans font)
+- [x] Certificate: QR code removed, Upper Leader congratulation message added
 - [x] Level system (5 levels based on completed courses)
 - [x] Badge system
 - [x] Split-screen login page with motivation text
 - [x] Professional sidebar navigation
-- [x] 28 API endpoints - 100% functional
+- [x] Dynamic login page (admin-configurable logo, bg, text)
+- [x] Football league-style leaderboard
+- [x] Qualifications/Announcements blog section
+- [x] Mobile responsive UI
+- [x] 28+ API endpoints - 100% functional
 
 ## Prioritized Backlog
 ### P0 (Critical) - DONE
