@@ -217,6 +217,13 @@ async def list_users(request: Request):
     if current['role'] not in ['super_admin', 'admin']:
         raise HTTPException(status_code=403, detail='Yetkiniz yok')
     users = await db.users.find({}, {'_id': 0, 'password_hash': 0}).to_list(1000)
+    # Resolve upper_leader names
+    for u in users:
+        if u.get('upper_leader'):
+            leader = await db.users.find_one({'id': u['upper_leader']}, {'_id': 0, 'full_name': 1})
+            u['upper_leader_name'] = leader['full_name'] if leader else u['upper_leader']
+        else:
+            u['upper_leader_name'] = None
     return users
 
 @api_router.get("/users/{user_id}")
