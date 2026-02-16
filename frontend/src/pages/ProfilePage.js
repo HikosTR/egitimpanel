@@ -13,6 +13,40 @@ export default function ProfilePage() {
   const { user, api } = useAuth();
   const [certificates, setCertificates] = useState([]);
   const [progress, setProgress] = useState([]);
+  const [sharingCertId, setSharingCertId] = useState(null);
+
+  const handleShareInstagram = async (certId) => {
+    setSharingCertId(certId);
+    try {
+      const imageUrl = `${BACKEND_URL}/api/certificates/${certId}/story-image`;
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      const file = new File([blob], `sertifika_${certId}.png`, { type: 'image/png' });
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: 'ProFit Team Sertifikam',
+          text: 'ProFit Team eğitimimi başarıyla tamamladım! #ProfitTeam #Başarı',
+        });
+      } else {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `sertifika_${certId}_story.png`;
+        link.click();
+        URL.revokeObjectURL(link.href);
+      }
+    } catch (err) {
+      if (err.name !== 'AbortError') {
+        const link = document.createElement('a');
+        link.href = `${BACKEND_URL}/api/certificates/${certId}/story-image`;
+        link.download = `sertifika_${certId}_story.png`;
+        link.click();
+      }
+    } finally {
+      setSharingCertId(null);
+    }
+  };
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
