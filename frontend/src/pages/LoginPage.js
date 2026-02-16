@@ -78,10 +78,10 @@ export default function LoginPage() {
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-20">
             {logoUrl ? (
-              <img src={logoUrl} alt="Logo" className="h-10 w-auto object-contain" data-testid="login-logo" />
+              <img src={logoUrl} alt="Logo" className="h-20 w-auto object-contain" data-testid="login-logo" />
             ) : (
-              <div className="w-10 h-10 rounded-lg bg-[#00C853] flex items-center justify-center">
-                <GraduationCap className="w-6 h-6 text-white" />
+              <div className="w-20 h-20 rounded-lg bg-[#00C853] flex items-center justify-center">
+                <GraduationCap className="w-12 h-12 text-white" />
               </div>
             )}
             <span className="text-xl font-bold text-white tracking-tight" style={{ fontFamily: 'Barlow Condensed' }}>
@@ -130,10 +130,10 @@ export default function LoginPage() {
         <div className="w-full max-w-md">
           <div className="lg:hidden flex items-center gap-3 mb-12">
             {logoUrl ? (
-              <img src={logoUrl} alt="Logo" className="h-9 w-auto object-contain" />
+              <img src={logoUrl} alt="Logo" className="h-[4.5rem] w-auto object-contain" />
             ) : (
-              <div className="w-9 h-9 rounded-lg bg-[#00C853] flex items-center justify-center">
-                <GraduationCap className="w-5 h-5 text-white" />
+              <div className="w-[4.5rem] h-[4.5rem] rounded-lg bg-[#00C853] flex items-center justify-center">
+                <GraduationCap className="w-10 h-10 text-white" />
               </div>
             )}
             <span className="text-lg font-bold text-[#111111] tracking-tight" style={{ fontFamily: 'Barlow Condensed' }}>

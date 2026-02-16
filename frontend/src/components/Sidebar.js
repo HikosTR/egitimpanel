@@ -62,10 +62,10 @@ export const Sidebar = () => {
       <div className="p-6 border-b border-white/10">
         <div className="flex items-center gap-3">
           {logoUrl ? (
-            <img src={logoUrl} alt="Logo" className="w-9 h-9 rounded-lg object-contain flex-shrink-0" data-testid="sidebar-logo" />
+            <img src={logoUrl} alt="Logo" className="w-[4.5rem] h-[4.5rem] rounded-lg object-contain flex-shrink-0" data-testid="sidebar-logo" />
           ) : (
-            <div className="w-9 h-9 rounded-lg bg-[#00C853] flex items-center justify-center flex-shrink-0">
-              <GraduationCap className="w-5 h-5 text-white" />
+            <div className="w-[4.5rem] h-[4.5rem] rounded-lg bg-[#00C853] flex items-center justify-center flex-shrink-0">
+              <GraduationCap className="w-10 h-10 text-white" />
             </div>
           )}
           {!collapsed && (
