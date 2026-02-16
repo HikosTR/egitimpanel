@@ -108,7 +108,7 @@ export default function ProfilePage() {
                 {user?.upper_leader && (
                   <div className="mt-6 pt-4 border-t border-gray-100">
                     <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold">Ust Lider</p>
-                    <p className="text-sm text-[#111111] mt-1">{user.upper_leader}</p>
+                    <p className="text-sm text-[#111111] mt-1 font-medium">{user.upper_leader_name || user.upper_leader}</p>
                   </div>
                 )}
               </CardContent>
