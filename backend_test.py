@@ -11,7 +11,7 @@ import time
 from datetime import datetime, timezone
 
 class ProFitAPITester:
-    def __init__(self, base_url="https://profit-edu.preview.emergentagent.com/api"):
+    def __init__(self, base_url="https://team-training-hub-5.preview.emergentagent.com/api"):
         self.base_url = base_url
         self.super_admin_token = None
         self.distributor_token = None
