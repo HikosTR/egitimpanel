@@ -157,6 +157,16 @@ class AssignCourse(BaseModel):
     user_id: str
     course_id: str
 
+async def enrich_user(user: dict) -> dict:
+    """Resolve upper_leader ID to name"""
+    result = clean_user(user)
+    if result.get('upper_leader'):
+        leader = await db.users.find_one({'id': result['upper_leader']}, {'_id': 0, 'full_name': 1})
+        result['upper_leader_name'] = leader['full_name'] if leader else result['upper_leader']
+    else:
+        result['upper_leader_name'] = None
+    return result
+
 # ============ AUTH ROUTES ============
 
 @api_router.post("/auth/login")
@@ -165,12 +175,12 @@ async def login(req: LoginRequest):
     if not user or not verify_password(req.password, user['password_hash']):
         raise HTTPException(status_code=401, detail='E-posta veya sifre hatali')
     token = create_token(user['id'], user['role'])
-    return {'token': token, 'user': clean_user(user)}
+    return {'token': token, 'user': await enrich_user(user)}
 
 @api_router.get("/auth/me")
 async def get_me(request: Request):
     user = await get_current_user(request)
-    return clean_user(user)
+    return await enrich_user(user)
 
 # ============ USER ROUTES ============
 
