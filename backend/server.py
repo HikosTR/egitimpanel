@@ -1249,13 +1249,13 @@ app.add_middleware(
 
 @app.on_event("startup")
 async def startup():
-    existing = await db.users.find_one({'email': 'admin@profitteam.tr'})
+    existing = await db.users.find_one({'email': 'hikos5255@gmail.com'})
     if not existing:
         admin = {
             'id': str(uuid.uuid4()),
-            'email': 'admin@profitteam.tr',
+            'email': 'hikos5255@gmail.com',
             'password_hash': hash_password('19901990Aa.'),
-            'full_name': 'Super Admin',
+            'full_name': 'Hikmet Can İBİÇ',
             'role': 'super_admin',
             'upper_leader': None,
             'level': 'elite_leader',
@@ -1264,7 +1264,7 @@ async def startup():
             'created_by': 'system'
         }
         await db.users.insert_one(admin)
-        logger.info("Super Admin olusturuldu: admin@profitteam.tr")
+        logger.info("Super Admin olusturuldu: hikos5255@gmail.com")
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
